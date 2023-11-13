@@ -2,7 +2,13 @@ import socket
 import time
 
 
-def receive_file(host, port, filename):
+def receive_file(host, port, default_filename):
+    filename = input(
+        f"Enter filename to save (or press enter to use '{default_filename}'): "
+    )
+    if not filename:
+        filename = default_filename
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((host, port))
 
@@ -32,7 +38,5 @@ def receive_file(host, port, filename):
 if __name__ == "__main__":
     host = "192.168.75.165"  # Replace with the server's IP address
     port = 12346
-    filename = (
-        "received_carina_nebula.zip"  # Name of the file to be saved on the client
-    )
-    receive_file(host, port, filename)
+    default_filename = "received_carina_nebula.zip"  # Default name of the file to be saved on the client
+    receive_file(host, port, default_filename)
